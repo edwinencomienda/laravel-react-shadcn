@@ -1,14 +1,12 @@
-import DangerButton from '@/Components/DangerButton';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import Modal from '@/Components/Modal';
-import SecondaryButton from '@/Components/SecondaryButton';
-import TextInput from '@/Components/TextInput';
-import { useForm } from '@inertiajs/react';
-import { FormEventHandler, useRef, useState } from 'react';
+import Modal from "@/Components/Modal";
+import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+import { useForm } from "@inertiajs/react";
+import { FormEventHandler, useRef, useState } from "react";
 
 export default function DeleteUserForm({
-    className = '',
+    className = "",
 }: {
     className?: string;
 }) {
@@ -24,7 +22,7 @@ export default function DeleteUserForm({
         errors,
         clearErrors,
     } = useForm({
-        password: '',
+        password: "",
     });
 
     const confirmUserDeletion = () => {
@@ -34,7 +32,7 @@ export default function DeleteUserForm({
     const deleteUser: FormEventHandler = (e) => {
         e.preventDefault();
 
-        destroy(route('profile.destroy'), {
+        destroy(route("profile.destroy"), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
             onError: () => passwordInput.current?.focus(),
@@ -64,9 +62,9 @@ export default function DeleteUserForm({
                 </p>
             </header>
 
-            <DangerButton onClick={confirmUserDeletion}>
+            <Button variant="destructive" onClick={confirmUserDeletion}>
                 Delete Account
-            </DangerButton>
+            </Button>
 
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
                 <form onSubmit={deleteUser} className="p-6">
@@ -82,40 +80,47 @@ export default function DeleteUserForm({
                     </p>
 
                     <div className="mt-6">
-                        <InputLabel
-                            htmlFor="password"
-                            value="Password"
-                            className="sr-only"
-                        />
+                        <Label htmlFor="password" className="sr-only">
+                            Password
+                        </Label>
 
-                        <TextInput
+                        <Input
                             id="password"
                             type="password"
                             name="password"
                             ref={passwordInput}
                             value={data.password}
                             onChange={(e) =>
-                                setData('password', e.target.value)
+                                setData("password", e.target.value)
                             }
                             className="mt-1 block w-3/4"
-                            isFocused
+                            autoFocus
                             placeholder="Password"
                         />
 
-                        <InputError
-                            message={errors.password}
-                            className="mt-2"
-                        />
+                        {errors.password && (
+                            <p className="mt-2 text-sm text-red-500">
+                                {errors.password}
+                            </p>
+                        )}
                     </div>
 
                     <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>
+                        <Button
+                            variant="outline"
+                            onClick={closeModal}
+                            type="button"
+                        >
                             Cancel
-                        </SecondaryButton>
+                        </Button>
 
-                        <DangerButton className="ms-3" disabled={processing}>
+                        <Button
+                            variant="destructive"
+                            className="ms-3"
+                            disabled={processing}
+                        >
                             Delete Account
-                        </DangerButton>
+                        </Button>
                     </div>
                 </form>
             </Modal>

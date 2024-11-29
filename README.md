@@ -1,4 +1,8 @@
-# Getting Started
+# Laravel Inertia React Shadcn UI
+
+A [Laravel](https://laravel.com/) boilerplate for [Laravel Inertia React](https://inertiajs.com/) with [Shadcn UI](https://ui.shadcn.com/).
+
+## Getting Started
 
 To get started, clone the repository and install the dependencies:
 
